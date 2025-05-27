@@ -52,7 +52,7 @@ ecommerce-growth-analysis/
 
 ## 🚀 Cómo ejecutar el proyecto
 1. Clonar el repositorio 
- `git clone https://github.com/tu_usuario/ecommerce-growth-analysis.git`
+ `https://github.com/Dulce-Tapia/Analisis-de-Crecimiento-del-Ecommerce-en-EU.git`
 2. Abre `scripts/ecommerce_analysis.Rmd` en RStudio
 3. Ejecuta el código para limpiar y analizar los datos
 4. Abra `dashboard_tableau.twbx` en Tableau Desktop
