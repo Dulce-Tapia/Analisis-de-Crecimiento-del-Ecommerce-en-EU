@@ -33,9 +33,8 @@ Analizar qué sectores del e-commerce están experimentando mayor crecimiento y 
 
 ## 📊 Tableau Dashboard
 
-👉 View the interactive dashboard on **[Tableau Public](https://public.tableau.com/app/profile/tu_usuario)**  
-(Snapshot below)
-![Dashboard Screenshot](./outputs/plots/dashboard_preview.png)
+👉 View the interactive dashboard on **[Tableau Public](https://public.tableau.com/app/profile/dulce.tapia)**  
+![Dashboard Screenshot](./outputs/Dashboard_Analisis.png)
 
 ## 📁 Project Structure
 ecommerce-growth-analysis/
