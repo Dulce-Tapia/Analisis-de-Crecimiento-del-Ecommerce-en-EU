@@ -1,0 +1,121 @@
+---
+title: "\"Análisis de crecimiento del e-commerce en EE. UU.\""
+author: "Dulce Tapia"
+date: "2025-05-26"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Objetivo
+
+Visualizar qué sectores del e-commerce crecen más en EE. UU. y en qué estados se concentran las empresas con mayor desempeño, para apoyar decisiones de inversión o expansión.
+
+Las datos utilizados se obtuvieron de kaggle de la base de datos USA Online Shopping del siguiente link <https://www.kaggle.com/datasets/zahidmughal2343/usa-online-shopping>
+
+## Cargar datos
+
+```{r cargar-datos}
+data <- read_csv("usa_online_shopping.csv")
+
+#Vista general de datos
+glimpse(data)
+summary(data)
+```
+
+## Limpieza de datos
+
+```{r preparar-datos}
+#Convertir el porcentaje de crecimiento a número ya que se encuentra como string y Crear una nueva columna solo con el estado (omitiendo la ciudad)
+data <- data %>%
+  mutate(GrowthRate = as.numeric(str_replace(`Revenue growth`,"%","")),State = str_trim(str_extract(`Headquarters`, "(?<=, ).*"))) 
+
+#Revisar si hay NAs
+sum(is.na(data$GrowthRate))
+```
+
+## Crecimiento promedio por tipo de e-commerce
+
+```{r crecimiento-sector}
+#Obtener un arreglo con el promedio de crecimiento por sector
+growth_by_sector <- data %>%
+  group_by(`Industry`) %>%
+  summarise(
+    avg_growth=mean(GrowthRate, na.rm = TRUE),
+    Num_Comanies = n()
+  ) %>%
+  arrange(desc(avg_growth))
+
+#Graficar el promedio de crecimiento por sector
+ggplot(growth_by_sector, aes(x = reorder(`Industry`, avg_growth), y = avg_growth)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Crecimiento promedio por tipo de e-commerce",
+       x = "Tipo de e-commerce",
+       y = "Crecimiento promedio (%)") + 
+  theme(axis.text.y = element_text(size = 7), axis.text.x = element_text(size = 7),
+        plot.title = element_text(hjust=0.5))
+```
+
+## Crecimiento promedio por estado
+
+```{r ingresos-estado}
+#Calcular ingresos y crecimiento por estado 
+geo_summary <- data %>%
+  group_by(`State`) %>%
+  summarise(
+    avg_revenue = mean(`Revenue (USD millions)`, na.rm = TRUE),
+    avg_growth = mean(GrowthRate, na.rm = TRUE),
+    Num_Companies = n()
+  ) %>%
+  arrange(desc(avg_revenue))
+
+#Graficar para visualizar los estados con mayores ingresos
+ggplot(geo_summary, aes(x = reorder(`State`, avg_revenue), y = avg_revenue)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(title = "Ingresos promedio por estado",
+       x = "Estado",
+       y = "Ingresos (Millones USD)") +
+  theme(axis.text.y = element_text(size = 7), axis.text.x = element_text(size = 7),
+        plot.title = element_text(hjust=0.5))
+```
+
+## Cruce entre tipo de e-commerce y estado
+
+```{r cruzado-sector-estado}
+#Obtener el cruce 
+sector_geo <- data %>%
+  group_by(`State`, `Industry`) %>%
+  summarise(
+    avg_growth = mean(GrowthRate, na.rm = TRUE),
+    avg_revenue = mean(`Revenue (USD millions)`, na.rm = TRUE),
+    Num_Companies = n()
+  ) %>%
+  arrange(desc(avg_growth))
+
+#Grafica de dispersión 
+ggplot(sector_geo, aes(x = `State`, y =  `Industry`, size = avg_growth, fill = avg_revenue)) +
+  geom_point(shape = 21, color = "black") +
+  scale_fill_gradient(low = "lightyellow", high = "darkred") +
+  labs(title = "Crecimiento e ingresos por sector y estado",
+       x = "Estado",
+       y = "Tipo de e-commerce",
+       size = "Crecimiento (%)",
+       fill = "Ingresos (Millones USD)") 
+  theme_minimal()
+```
+
+## Conclusiones
+
+El análisis del comercio electrónico en EE. UU. revela que los estados de California, Texas y Nueva York concentran el mayor número de empresas del sector, lo que confirma su papel como polos tradicionales de innovación y comercio. Sin embargo, el tipo de industria con mayor tasa de crecimiento es Infotech, aunque no es el sector que genera los mayores ingresos totales, lo que indica un alto potencial de escalabilidad a futuro.
+
+Además, se identificaron estados como Michigan que, a pesar de tener una baja densidad de empresas, presentan tasas de crecimiento elevadas. Esto sugiere una oportunidad estratégica de expansión en regiones aún poco saturadas pero con alto dinamismo económico.
+
+Estos hallazgos pueden guiar decisiones de inversión, marketing o expansión geográfica para empresas y emprendedores interesados en el mercado e-commerce estadounidense.
