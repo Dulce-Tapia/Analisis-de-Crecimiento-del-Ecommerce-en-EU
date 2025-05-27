@@ -34,25 +34,23 @@ Analizar qué sectores del e-commerce están experimentando mayor crecimiento y 
 ## 📊 Tableau Dashboard
 
 👉 View the interactive dashboard on **[Tableau Public](https://public.tableau.com/app/profile/dulce.tapia)**  
-![Dashboard Screenshot](./outputs/Dashboard_Analisis.png)
 
 ## 📁 Project Structure
-ecommerce-growth-analysis/
-├── data/
-│ └── usa_ecommerce_data.csv
-├── scripts/
-│ └── ecommerce_analysis.Rmd
-├── outputs/
-│ ├── dashboard_tableau.twbx
-│ └── plots/
-│ └── dashboard_preview.png
-├── README.md
-└── .gitignore
+Analisis-de-Crecimiento-del-Ecommerce-en-EU
+data/usa_ecommerce_data.csv
+scripts/Analisis-de-Ecommerce.Rmd
+       /Analisis_ecommerce.R
+outputs/Analisis Estrategico del Crecimiento del E-commerce en EE. UU..twbx
+       /Dashboard_Analisis.png
+       /plots/Rplot.png
+       /plots/Rplot01.png
+       /plots/Rplot02.png
+README.md
 
 ## 🚀 Cómo ejecutar el proyecto
 1. Clonar el repositorio 
  `https://github.com/Dulce-Tapia/Analisis-de-Crecimiento-del-Ecommerce-en-EU.git`
-2. Abre `scripts/ecommerce_analysis.Rmd` en RStudio
+2. Abre `scripts/Analisis-de-Ecommerce.Rmd` en RStudio
 3. Ejecuta el código para limpiar y analizar los datos
 4. Abra `dashboard_tableau.twbx` en Tableau Desktop
 
