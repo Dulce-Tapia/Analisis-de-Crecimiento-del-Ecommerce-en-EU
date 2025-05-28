@@ -37,14 +37,17 @@ Analizar qué sectores del e-commerce están experimentando mayor crecimiento y 
 
 ## 📁 Project Structure
 Analisis-de-Crecimiento-del-Ecommerce-en-EU
+
 data/usa_ecommerce_data.csv
 scripts/Analisis-de-Ecommerce.Rmd
        /Analisis_ecommerce.R
+       
 outputs/Analisis Estrategico del Crecimiento del E-commerce en EE. UU..twbx
        /Dashboard_Analisis.png
        /plots/Rplot.png
        /plots/Rplot01.png
        /plots/Rplot02.png
+       
 README.md
 
 ## 🚀 Cómo ejecutar el proyecto
